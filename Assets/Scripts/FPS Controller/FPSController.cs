@@ -69,11 +69,11 @@ public class FPSController : MonoBehaviour
 
 
         _inputModifyFactor = (_inputX != 0 && _inputZ != 0) ? .5f : 1;
-        _moveDirection = new Vector3((_inputX * _inputModifyFactor) * Time.deltaTime, 0, (_inputZ * _inputModifyFactor) * Time.deltaTime);
-        _moveDirection -= new Vector3(0f, GravityForce * Time.deltaTime, 0f);
+        _moveDirection = new Vector3(_inputX * _inputModifyFactor, 0, _inputZ * _inputModifyFactor);
+        _moveDirection -= new Vector3(0f, GravityForce, 0f);
         _moveDirection = transform.TransformDirection(_moveDirection * _speed);
-        _isGrounded = (_playerCharacterController.Move(_moveDirection) & CollisionFlags.Below) != 0f;
 
+        _isGrounded = (_playerCharacterController.Move(_moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0f;
 
 
         if (_inputX != 0f || _inputZ != 0f)
