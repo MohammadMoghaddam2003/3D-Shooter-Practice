@@ -9,11 +9,11 @@ D:\Program Files\Unity\Editor\Unity.exe
 -batchMode
 -noUpm
 -name
-AssetImportWorker0
+AssetImportWorker1
 -projectPath
 E:/MOHAMMAD/Project/Git Hub/First-Character-Controller
 -logFile
-Logs/AssetImportWorker0.log
+Logs/AssetImportWorker1.log
 -srvPort
 1459
 Successfully changed project path to: E:/MOHAMMAD/Project/Git Hub/First-Character-Controller

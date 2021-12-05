@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class FPSController : MonoBehaviour
     private Transform _cameraTransform;
     private Animator _playerAnimator;
     private Vector3 _moveDirection;
-    private bool _isGrounded = false, _isCrouching, _isWalking;
+    private bool _isGrounded = false, _isCrouching;
     private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCapsuleColliderDefaultHeight
     , _playerCapsuleColliderSetHeight, _cameraDefaultHeight, _cameraSetHeight;
 
@@ -21,7 +22,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         _speed = WalkSpeed;
-        _cameraTransform = GameObject.Find("Main Camera").transform;
+        _cameraTransform = GameObject.Find("FPS Camera").transform;
         _cameraDefaultHeight = _cameraTransform.localPosition.y;
         _playerAnimator = GetComponent<Animator>();
         _playerCharacterController = GetComponent<CharacterController>();
@@ -69,36 +70,51 @@ public class FPSController : MonoBehaviour
 
 
         _inputModifyFactor = (_inputX != 0 && _inputZ != 0) ? .5f : 1;
-        _moveDirection = new Vector3(_inputX * _inputModifyFactor, 0, _inputZ * _inputModifyFactor);
-        _moveDirection -= new Vector3(0f, GravityForce, 0f);
+
+        if (_isGrounded)
+        {
+            _moveDirection = new Vector3(_inputX * _inputModifyFactor, 0, _inputZ * _inputModifyFactor);
+            JumpingPlayer();
+        }
+
+        _moveDirection.y -= GravityForce;
         _moveDirection = transform.TransformDirection(_moveDirection * _speed);
 
         _isGrounded = (_playerCharacterController.Move(_moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0f;
 
 
-        if (_inputX != 0f || _inputZ != 0f)
-        {
-            _isWalking = true;
-        }
-        else
-        {
-            _isWalking = false;
-        }
+        //if (_inputX != 0f || _inputZ != 0f)
+        //{
+        //    _isWalking = true;
+        //}
+        //else
+        //{
+        //    _isWalking = false;
+        //}
 
-        _playerAnimator.SetFloat("Walking", _playerCharacterController.velocity.magnitude);
+        _playerAnimator.SetFloat("VelocityZ", transform.TransformDirection(_playerCharacterController.velocity).z);
 
-        _playerAnimator.SetBool("IsWalking", _isWalking);
+        _playerAnimator.SetFloat("VelocityX", transform.TransformDirection(_playerCharacterController.velocity).x);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded && !_isCrouching)
-        {
-            JumpingPlayer();
-        }
+
     }
 
     void JumpingPlayer()
     {
-        _moveDirection += new Vector3(0f, JumpForce * Time.deltaTime, 0f);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_isCrouching)
+            {
+                _isCrouching = !_isCrouching; 
+                StopCoroutine(SetCrouching());
+                StartCoroutine(SetCrouching());
+            }
+            else
+            {
+                _moveDirection.y = JumpForce;
+            }
+        }
     }
 
     IEnumerator SetCrouching()
@@ -114,5 +130,7 @@ public class FPSController : MonoBehaviour
 
         yield return null;
     }
+
+
 }
 
