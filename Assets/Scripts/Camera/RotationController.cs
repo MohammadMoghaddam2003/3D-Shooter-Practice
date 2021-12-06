@@ -3,7 +3,6 @@ using UnityEngine;
 public class RotationController : MonoBehaviour
 {
     public Axis SetAxis = Axis.AxisX;
-    public bool IsHead;
     public float Sensivity = 10f, X_Min = -360f, X_Max = 360f, Y_Min = -60f, Y_Max = 60f;
 
     private float _rotationValue;
@@ -27,19 +26,9 @@ public class RotationController : MonoBehaviour
                 }
             case Axis.AxisY:
                 {
-                    if (!IsHead)
-                    {
-                        _rotationValue -= Input.GetAxis("Mouse Y") * Sensivity * Time.deltaTime;
-                        _rotationValue = RotationClamping(_rotationValue, Y_Min, Y_Max);
-                        transform.localRotation = Quaternion.Euler(_rotationValue, 0f, 0f);
-                    }
-                    else
-                    {
-                        _rotationValue -= Input.GetAxis("Mouse Y") * Time.deltaTime;
-                        _rotationValue = RotationClamping(_rotationValue, Y_Min, 10f);
-                        transform.localRotation = Quaternion.Euler(0f, 0f, -(_rotationValue));
-                    }
-
+                    _rotationValue -= Input.GetAxis("Mouse Y") * Sensivity * Time.deltaTime;
+                    _rotationValue = RotationClamping(_rotationValue, Y_Min, Y_Max);
+                    transform.localRotation = Quaternion.Euler(_rotationValue, 0f, 0f);
                     break;
                 }
         }

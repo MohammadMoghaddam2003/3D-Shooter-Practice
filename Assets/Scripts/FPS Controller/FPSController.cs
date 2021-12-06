@@ -7,6 +7,8 @@ public class FPSController : MonoBehaviour
     [Range(0f, 20f)]
     public float WalkSpeed = 6.5f, RunSpeed = 10f, CrouchingWalkSpeed = 2f, JumpForce = 3f, CrouchingSpeed = 3f
     , GravityForce = 10f;
+    public Camera _cameraFPS, _cameraTPS;
+
 
     private CharacterController _playerCharacterController;
     private Transform _cameraTransform;
@@ -83,21 +85,21 @@ public class FPSController : MonoBehaviour
         _isGrounded = (_playerCharacterController.Move(_moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0f;
 
 
-        //if (_inputX != 0f || _inputZ != 0f)
-        //{
-        //    _isWalking = true;
-        //}
-        //else
-        //{
-        //    _isWalking = false;
-        //}
 
         _playerAnimator.SetFloat("VelocityZ", transform.TransformDirection(_playerCharacterController.velocity).z);
 
         _playerAnimator.SetFloat("VelocityX", transform.TransformDirection(_playerCharacterController.velocity).x);
 
+        
 
-
+        if (_cameraFPS.enabled)
+        {
+            _playerAnimator.SetFloat("AimingTilt", -_cameraFPS.transform.rotation.x);
+        }
+        else
+        {
+            _playerAnimator.SetFloat("AimingTilt", -_cameraTPS.transform.rotation.x);
+        }
     }
 
     void JumpingPlayer()
@@ -106,7 +108,7 @@ public class FPSController : MonoBehaviour
         {
             if (_isCrouching)
             {
-                _isCrouching = !_isCrouching; 
+                _isCrouching = !_isCrouching;
                 StopCoroutine(SetCrouching());
                 StartCoroutine(SetCrouching());
             }
