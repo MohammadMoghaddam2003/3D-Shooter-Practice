@@ -1550,6 +1550,7 @@ GameObject:
   - component: {fileID: 972265007}
   - component: {fileID: 972265004}
   - component: {fileID: 972265005}
+  - component: {fileID: 972265006}
   m_Layer: 0
   m_Name: TPS Camera
   m_TagString: MainCamera
@@ -1618,6 +1619,19 @@ MonoBehaviour:
   X_Max: 360
   Y_Min: -20
   Y_Max: 30
+--- !u!114 &972265006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972265003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2077eb139ffd1b1438ad3765de0d5607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 5397534616831559383, guid: e0dabd91ecd93044d9adffbd80f418f0, type: 3}
 --- !u!4 &972265007
 Transform:
   m_ObjectHideFlags: 0
@@ -2498,6 +2512,7 @@ GameObject:
   - component: {fileID: 1659258711}
   - component: {fileID: 1659258713}
   - component: {fileID: 1659258714}
+  - component: {fileID: 1659258712}
   m_Layer: 0
   m_Name: FPS Camera
   m_TagString: MainCamera
@@ -2520,6 +2535,19 @@ Transform:
   m_Father: {fileID: 1524950180}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1659258712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659258710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2077eb139ffd1b1438ad3765de0d5607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 5397534616831559383, guid: e0dabd91ecd93044d9adffbd80f418f0, type: 3}
 --- !u!20 &1659258713
 Camera:
   m_ObjectHideFlags: 0

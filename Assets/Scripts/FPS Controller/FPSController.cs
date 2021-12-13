@@ -90,15 +90,15 @@ public class FPSController : MonoBehaviour
 
         _playerAnimator.SetFloat("VelocityX", transform.TransformDirection(_playerCharacterController.velocity).x);
 
-        
+
 
         if (_cameraFPS.enabled)
         {
-            _playerAnimator.SetFloat("AimingTilt", -_cameraFPS.transform.rotation.x);
+            _playerAnimator.SetFloat("AimingTilt", -_cameraFPS.transform.localRotation.normalized.x);
         }
         else
         {
-            _playerAnimator.SetFloat("AimingTilt", -_cameraTPS.transform.rotation.x);
+            _playerAnimator.SetFloat("AimingTilt", -_cameraTPS.transform.localRotation.normalized.x);
         }
     }
 
