@@ -15,8 +15,8 @@ public class FPSController : MonoBehaviour
     private Animator _playerAnimator;
     private Vector3 _moveDirection;
     private bool _isGrounded = false, _isCrouching;
-    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCapsuleColliderDefaultHeight
-    , _playerCapsuleColliderSetHeight, _cameraDefaultHeight, _cameraSetHeight;
+    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCharacterControllerDefaultHeight,
+    _playerCharacterControllerCenterDefaultHeight, _cameraDefaultHeight, _cameraSetHeight;
 
 
 
@@ -28,7 +28,8 @@ public class FPSController : MonoBehaviour
         _cameraDefaultHeight = _cameraTransform.localPosition.y;
         _playerAnimator = GetComponent<Animator>();
         _playerCharacterController = GetComponent<CharacterController>();
-        _playerCapsuleColliderDefaultHeight = _playerCharacterController.height;
+        _playerCharacterControllerDefaultHeight = _playerCharacterController.height;
+        //_playerCharacterControllerCenterDefaultHeight = _playerCharacterController.center.y;
     }
 
     void Update()
@@ -100,6 +101,8 @@ public class FPSController : MonoBehaviour
         {
             _playerAnimator.SetFloat("AimingTilt", -_cameraTPS.transform.localRotation.normalized.x);
         }
+
+        _playerAnimator.SetBool("IsCrouch", _isCrouching);
     }
 
     void JumpingPlayer()
@@ -115,24 +118,25 @@ public class FPSController : MonoBehaviour
             else
             {
                 _moveDirection.y = JumpForce;
+                _playerAnimator.SetTrigger("Jump");
             }
         }
     }
 
     IEnumerator SetCrouching()
     {
-        _playerCapsuleColliderSetHeight = _isCrouching ? _playerCapsuleColliderDefaultHeight / 2 : _playerCapsuleColliderDefaultHeight;
+        _playerCharacterControllerDefaultHeight = _isCrouching ? _playerCharacterControllerDefaultHeight / 2 : _playerCharacterControllerDefaultHeight;
+        //_playerCharacterControllerCenterDefaultHeight = _isCrouching ? _playerCharacterControllerCenterDefaultHeight / 2 : _playerCharacterControllerCenterDefaultHeight;
         _cameraSetHeight = _isCrouching ? _cameraDefaultHeight / 2 : _cameraDefaultHeight;
 
-        while (Mathf.Abs(_playerCharacterController.height - _playerCapsuleColliderSetHeight) > 0.0001f)
+        while (Mathf.Abs(_playerCharacterController.height - _playerCharacterControllerDefaultHeight) > 0.0001f)
         {
-            _playerCharacterController.height = Mathf.Lerp(_playerCharacterController.height, _playerCapsuleColliderSetHeight, CrouchingSpeed * Time.deltaTime);
+            _playerCharacterController.height = Mathf.Lerp(_playerCharacterController.height, _playerCharacterControllerDefaultHeight, CrouchingSpeed * Time.deltaTime);
+            //_playerCharacterController.center = Vector3.Lerp(_playerCharacterController.center, new Vector3(_playerCharacterController.center.x, _playerCharacterControllerCenterDefaultHeight, _playerCharacterController.center.z), CrouchingSpeed * Time.deltaTime);
             _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, new Vector3(_cameraTransform.localPosition.x, _cameraSetHeight, _cameraTransform.localPosition.z), CrouchingSpeed * Time.deltaTime);
         }
 
         yield return null;
     }
-
-
 }
 
