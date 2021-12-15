@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,8 +14,8 @@ public class FPSController : MonoBehaviour
     private Animator _playerAnimator;
     private Vector3 _moveDirection;
     private bool _isGrounded = false, _isCrouching;
-    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCharacterControllerDefaultHeight,
-    _playerCharacterControllerCenterDefaultHeight, _cameraDefaultHeight, _cameraSetHeight;
+    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCharacterControllerDefaultHeight
+    , _playerCharacterControllerSetHeight, _cameraDefaultHeight, _cameraSetHeight;
 
 
 
@@ -29,7 +28,6 @@ public class FPSController : MonoBehaviour
         _playerAnimator = GetComponent<Animator>();
         _playerCharacterController = GetComponent<CharacterController>();
         _playerCharacterControllerDefaultHeight = _playerCharacterController.height;
-        //_playerCharacterControllerCenterDefaultHeight = _playerCharacterController.center.y;
     }
 
     void Update()
@@ -42,8 +40,6 @@ public class FPSController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             _isCrouching = !_isCrouching;
-            StopCoroutine(SetCrouching());
-            StartCoroutine(SetCrouching());
 
             if (_isCrouching)
             {
@@ -64,6 +60,9 @@ public class FPSController : MonoBehaviour
                 _speed = WalkSpeed;
             }
         }
+
+
+        SetCrouching();
 
 
 
@@ -112,8 +111,7 @@ public class FPSController : MonoBehaviour
             if (_isCrouching)
             {
                 _isCrouching = !_isCrouching;
-                StopCoroutine(SetCrouching());
-                StartCoroutine(SetCrouching());
+                SetCrouching();
             }
             else
             {
@@ -123,20 +121,19 @@ public class FPSController : MonoBehaviour
         }
     }
 
-    IEnumerator SetCrouching()
+    void SetCrouching()
     {
-        _playerCharacterControllerDefaultHeight = _isCrouching ? _playerCharacterControllerDefaultHeight / 2 : _playerCharacterControllerDefaultHeight;
-        //_playerCharacterControllerCenterDefaultHeight = _isCrouching ? _playerCharacterControllerCenterDefaultHeight / 2 : _playerCharacterControllerCenterDefaultHeight;
-        _cameraSetHeight = _isCrouching ? _cameraDefaultHeight / 2 : _cameraDefaultHeight;
+        _playerCharacterController.height = _isCrouching ?
+         _playerCharacterControllerDefaultHeight / 1.1f : _playerCharacterControllerDefaultHeight;
+        transform.localPosition = new Vector3(transform.localPosition.x, 4.531361f, transform.localPosition.z);
 
-        while (Mathf.Abs(_playerCharacterController.height - _playerCharacterControllerDefaultHeight) > 0.0001f)
-        {
-            _playerCharacterController.height = Mathf.Lerp(_playerCharacterController.height, _playerCharacterControllerDefaultHeight, CrouchingSpeed * Time.deltaTime);
-            //_playerCharacterController.center = Vector3.Lerp(_playerCharacterController.center, new Vector3(_playerCharacterController.center.x, _playerCharacterControllerCenterDefaultHeight, _playerCharacterController.center.z), CrouchingSpeed * Time.deltaTime);
-            _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, new Vector3(_cameraTransform.localPosition.x, _cameraSetHeight, _cameraTransform.localPosition.z), CrouchingSpeed * Time.deltaTime);
-        }
+        _playerCharacterController.center = new Vector3(_playerCharacterController.center.x,
+         _playerCharacterController.height / 2f, _playerCharacterController.center.z);
 
-        yield return null;
+        _cameraSetHeight = _isCrouching ? _cameraDefaultHeight / 1.1f : _cameraDefaultHeight;
+
+        _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition,
+         new Vector3(_cameraTransform.localPosition.x, _cameraSetHeight, _cameraTransform.localPosition.z), CrouchingSpeed * Time.deltaTime);
     }
 }
 
