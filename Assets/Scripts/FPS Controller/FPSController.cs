@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class FPSController : MonoBehaviour
@@ -14,8 +13,8 @@ public class FPSController : MonoBehaviour
     private Animator _playerAnimator;
     private Vector3 _moveDirection;
     private bool _isGrounded = false, _isCrouching;
-    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCharacterControllerDefaultHeight
-    , _playerCharacterControllerSetHeight, _cameraDefaultHeight, _cameraSetHeight;
+    private float _inputX = 0, _inputZ = 0, _inputModifyFactor, _speed, _playerCharacterControllerDefaultHeight,
+     _cameraDefaultHeight, _cameraSetHeight;
 
 
 
@@ -124,13 +123,13 @@ public class FPSController : MonoBehaviour
     void SetCrouching()
     {
         _playerCharacterController.height = _isCrouching ?
-         _playerCharacterControllerDefaultHeight / 1.1f : _playerCharacterControllerDefaultHeight;
+         _playerCharacterControllerDefaultHeight / 2f : _playerCharacterControllerDefaultHeight;
         transform.localPosition = new Vector3(transform.localPosition.x, 4.531361f, transform.localPosition.z);
 
         _playerCharacterController.center = new Vector3(_playerCharacterController.center.x,
          _playerCharacterController.height / 2f, _playerCharacterController.center.z);
 
-        _cameraSetHeight = _isCrouching ? _cameraDefaultHeight / 1.1f : _cameraDefaultHeight;
+        _cameraSetHeight = _isCrouching ? _cameraDefaultHeight / 2f : _cameraDefaultHeight;
 
         _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition,
          new Vector3(_cameraTransform.localPosition.x, _cameraSetHeight, _cameraTransform.localPosition.z), CrouchingSpeed * Time.deltaTime);
