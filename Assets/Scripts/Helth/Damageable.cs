@@ -14,15 +14,18 @@ public class Damageable : MonoBehaviour
 
         if (Helth <= 0f)
         {
-            Instantiate(Explotion, transform.position, Quaternion.identity);
-
-            Collider[] colliders = Physics.OverlapSphere(transform.position, ExplotionWaveRadius);
-
-            foreach (var item in colliders)
+            if (gameObject.CompareTag("Cylinder"))
             {
-                Rigidbody ExplotionForce = item.transform.GetComponent<Rigidbody>();
-                if (ExplotionForce != null)
-                    ExplotionForce.AddExplosionForce(ExplotionWaveForce, transform.position, ExplotionWaveRadius);
+                Instantiate(Explotion, transform.position, Quaternion.identity);
+
+                Collider[] colliders = Physics.OverlapSphere(transform.position, ExplotionWaveRadius);
+
+                foreach (var item in colliders)
+                {
+                    Rigidbody ExplotionForce = item.transform.GetComponent<Rigidbody>();
+                    if (ExplotionForce != null)
+                        ExplotionForce.AddExplosionForce(ExplotionWaveForce, transform.position, ExplotionWaveRadius);
+                }
             }
 
             Destroy(gameObject);

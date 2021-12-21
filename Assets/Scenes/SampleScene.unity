@@ -2150,7 +2150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Impact: {fileID: 1198433344747220167, guid: 4cd10301dd9619b409d1a1f5122d5422, type: 3}
   Flame: {fileID: 725570050420458151, guid: 06486688e7cd4454da777a423a035c40, type: 3}
-  GunFire: {fileID: 1472867461598947847}
+  GunFire: {fileID: 1472867461584499559}
   ShootPower: 50
   FireRate: 15
   BuletDamage: 30
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Impact: {fileID: 1198433344747220167, guid: 4cd10301dd9619b409d1a1f5122d5422, type: 3}
   Flame: {fileID: 725570050420458151, guid: 06486688e7cd4454da777a423a035c40, type: 3}
-  GunFire: {fileID: 1472867461598947847}
+  GunFire: {fileID: 1472867461584499559}
   ShootPower: 50
   FireRate: 15
   BuletDamage: 30
@@ -13919,7 +13919,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -13972,7 +13972,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
