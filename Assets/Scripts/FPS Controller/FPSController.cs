@@ -21,6 +21,8 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         _speed = WalkSpeed;
         _cameraTransform = GameObject.Find("FPS Camera").transform;
         _cameraDefaultHeight = _cameraTransform.localPosition.y;
@@ -124,7 +126,6 @@ public class FPSController : MonoBehaviour
     {
         _playerCharacterController.height = _isCrouching ?
          _playerCharacterControllerDefaultHeight / 2f : _playerCharacterControllerDefaultHeight;
-        transform.localPosition = new Vector3(transform.localPosition.x, 4.531361f, transform.localPosition.z);
 
         _playerCharacterController.center = new Vector3(_playerCharacterController.center.x,
          _playerCharacterController.height / 2f, _playerCharacterController.center.z);
@@ -134,5 +135,7 @@ public class FPSController : MonoBehaviour
         _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition,
          new Vector3(_cameraTransform.localPosition.x, _cameraSetHeight, _cameraTransform.localPosition.z), CrouchingSpeed * Time.deltaTime);
     }
+
+   
 }
 
