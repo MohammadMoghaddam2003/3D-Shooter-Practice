@@ -1,21 +1,24 @@
-using System.Net.Http.Headers;
 using UnityEngine;
 
 public class FireController : MonoBehaviour
 {
-    public GameObject Impact, Flame, GunFire;
-    public Weapons M4A4, M4MB;
+    public GameObject Impact, Flame, M4MBMazerFlash_TPS, M4A4MazerFlash_TPS, M4MBMazerFlash_FPS, M4A4MazerFlash_FPS;
+    public Weapons M4A4_FPS, M4MB_FPS, M4MB_TPS, M4A4_TPS;
 
     private RaycastHit _hit;
     private Camera _camera;
-    private WeaponState _currentWeapon = WeaponState.M4MB;
+    private WeaponState _currentWeapon = WeaponState.M4A4;
     private float _nextTimeToFire;
 
 
     void Start()
     {
         _camera = GetComponent<Camera>();
-        GunFire.SetActive(false);
+        M4MBMazerFlash_TPS.SetActive(false);
+        M4MBMazerFlash_FPS.SetActive(false);
+
+        M4A4MazerFlash_TPS.SetActive(false);
+        M4A4MazerFlash_FPS.SetActive(false);
     }
 
     void Update()
@@ -35,12 +38,12 @@ public class FireController : MonoBehaviour
                 {
                     if (Time.time >= _nextTimeToFire)
                     {
-                        _nextTimeToFire = Time.time + 1 / M4A4.FireRate;
+                        _nextTimeToFire = Time.time + 1 / M4A4_FPS.FireRate;
 
-                        if (Physics.Raycast(transform.position, transform.forward, out _hit, M4A4.MaxDistance))
+                        if (Physics.Raycast(transform.position, transform.forward, out _hit, M4A4_FPS.MaxDistance))
                         {
                             if (_hit.rigidbody != null)
-                                _hit.rigidbody.AddForce(-_hit.point * M4A4.Power);
+                                _hit.rigidbody.AddForce(-_hit.point * M4A4_FPS.Power);
 
                             if (_hit.transform.CompareTag("Cylinder"))
                             {
@@ -48,7 +51,7 @@ public class FireController : MonoBehaviour
                                 cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
 
                                 Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                TakeDamage.Damage(M4A4.Damage * 3);
+                                TakeDamage.Damage(M4A4_FPS.Damage * 3);
                             }
                             else
                             {
@@ -58,7 +61,7 @@ public class FireController : MonoBehaviour
                                 if (!_hit.transform.CompareTag("Ground"))
                                 {
                                     Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                    TakeDamage.Damage(M4A4.Damage);
+                                    TakeDamage.Damage(M4A4_FPS.Damage);
                                 }
                             }
                         }
@@ -71,12 +74,12 @@ public class FireController : MonoBehaviour
                 {
                     if (Time.time >= _nextTimeToFire)
                     {
-                        _nextTimeToFire = Time.time + 1 / M4MB.FireRate;
+                        _nextTimeToFire = Time.time + 1 / M4MB_FPS.FireRate;
 
-                        if (Physics.Raycast(transform.position, transform.forward, out _hit, M4MB.MaxDistance))
+                        if (Physics.Raycast(transform.position, transform.forward, out _hit, M4MB_FPS.MaxDistance))
                         {
                             if (_hit.rigidbody != null)
-                                _hit.rigidbody.AddForce(-_hit.point * M4MB.Power);
+                                _hit.rigidbody.AddForce(-_hit.point * M4MB_FPS.Power);
 
                             if (_hit.transform.CompareTag("Cylinder"))
                             {
@@ -84,7 +87,7 @@ public class FireController : MonoBehaviour
                                 cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
 
                                 Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                TakeDamage.Damage(M4MB.Damage * 3);
+                                TakeDamage.Damage(M4MB_FPS.Damage * 3);
                             }
                             else
                             {
@@ -94,7 +97,7 @@ public class FireController : MonoBehaviour
                                 if (!_hit.transform.CompareTag("Ground"))
                                 {
                                     Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                    TakeDamage.Damage(M4MB.Damage);
+                                    TakeDamage.Damage(M4MB_FPS.Damage);
                                 }
                             }
                         }
@@ -107,12 +110,31 @@ public class FireController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            GunFire.SetActive(true);
+            if (_currentWeapon == WeaponState.M4MB)
+            {
+                M4MBMazerFlash_TPS.SetActive(true);
+                M4MBMazerFlash_FPS.SetActive(true);
+            }
+
+            else
+            {
+                M4A4MazerFlash_TPS.SetActive(true);
+                M4A4MazerFlash_FPS.SetActive(true);
+            }
         }
 
         if (Input.GetButtonUp("Fire1"))
         {
-            GunFire.SetActive(false);
+            if (_currentWeapon == WeaponState.M4MB)
+            {
+                M4MBMazerFlash_TPS.SetActive(false);
+                M4MBMazerFlash_FPS.SetActive(false);
+            }
+            else
+            {
+                M4A4MazerFlash_TPS.SetActive(false);
+                M4A4MazerFlash_FPS.SetActive(false);
+            }
         }
     }
 
@@ -121,14 +143,20 @@ public class FireController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _currentWeapon = WeaponState.M4MB;
-            M4A4.gameObject.SetActive(false);
-            M4MB.gameObject.SetActive(true);
+            M4A4_FPS.gameObject.SetActive(false);
+            M4A4_TPS.gameObject.SetActive(false);
+
+            M4MB_FPS.gameObject.SetActive(true);
+            M4MB_TPS.gameObject.SetActive(true);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             _currentWeapon = WeaponState.M4A4;
-            M4MB.gameObject.SetActive(false);
-            M4A4.gameObject.SetActive(true);
+            M4MB_FPS.gameObject.SetActive(false);
+            M4MB_TPS.gameObject.SetActive(false);
+
+            M4A4_FPS.gameObject.SetActive(true);
+            M4A4_TPS.gameObject.SetActive(true);
         }
     }
 }
