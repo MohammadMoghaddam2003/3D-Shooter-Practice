@@ -14,7 +14,7 @@ public class FireController : MonoBehaviour
     private RaycastHit _hit;
     private Camera _camera;
     private WeaponState _currentWeapon = WeaponState.M4A4;
-    private AudioSource _voiceOfReload;
+    private AudioSource _weaponsSounds;
     private float _nextTimeToFire;
     private static float _shootedBulletM4A4, _shootedBulletM4MB, _usedAmmoM4A4, _usedAmmoM4MB;
     private bool _canFire = true;
@@ -22,8 +22,8 @@ public class FireController : MonoBehaviour
 
     void Start()
     {
-        if (!_voiceOfReload)
-            _voiceOfReload = GetComponent<AudioSource>();
+        if (!_weaponsSounds)
+            _weaponsSounds = GetComponent<AudioSource>();
 
         _camera = GetComponent<Camera>();
         M4MBMazerFlash_TPS.SetActive(false);
@@ -39,13 +39,37 @@ public class FireController : MonoBehaviour
 
         if (_currentWeapon == WeaponState.M4A4)
         {
-            if (Input.GetButton("Fire1") && _camera.enabled && _shootedBulletM4A4 <= MaxBulletOfM4A4 && _canFire)
-                Fire();
+            if (Input.GetButton("Fire1") && _camera.enabled)
+            {
+                if (_shootedBulletM4A4 <= MaxBulletOfM4A4 && _canFire)
+                {
+                    _weaponsSounds.clip = M4A4_FPS.FireSound;
+                    _weaponsSounds.Play();
+                    Fire();
+                }
+                else
+                {
+                    _weaponsSounds.clip = M4A4_FPS.NoAmmoSound;
+                    _weaponsSounds.Play();
+                }
+            }
         }
         else
         {
-            if (Input.GetButtonDown("Fire1") && _camera.enabled && _shootedBulletM4MB <= MaxBulletOfM4MB && _canFire)
-                Fire();
+            if (Input.GetButtonDown("Fire1") && _camera.enabled)
+            {
+                if (_shootedBulletM4MB <= MaxBulletOfM4MB && _canFire)
+                {
+                    _weaponsSounds.clip = M4MB_FPS.FireSound;
+                    _weaponsSounds.Play();
+                    Fire();
+                }
+                else
+                {
+                    _weaponsSounds.clip = M4MB_FPS.NoAmmoSound;
+                    _weaponsSounds.Play();
+                }
+            }
         }
 
         SetActiveParticalSystemOfFire();
@@ -81,31 +105,34 @@ public class FireController : MonoBehaviour
 
                         if (Physics.Raycast(transform.position, transform.forward, out _hit, M4A4_FPS.MaxDistance))
                         {
-                            if (_hit.rigidbody != null)
-                                _hit.rigidbody.AddForce(-_hit.point * M4A4_FPS.Power);
-
-                            if (_hit.transform.CompareTag("Cylinder"))
+                            if (_hit.transform.CompareTag("Enemy"))
                             {
-                                GameObject cloneFlame = Instantiate(Flame, _hit.point, Quaternion.identity);
-                                cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
-
-                                Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                TakeDamage.Damage(M4A4_FPS.Damage * 3);
+                                Health TakeDamage = _hit.transform.GetComponent<Health>();
+                                TakeDamage.adjustCurrentHealth(-(int)M4A4_FPS.Damage);
                             }
                             else
                             {
-                                GameObject clonedImpact = Instantiate(Impact, _hit.point, Quaternion.identity);
-                                clonedImpact.transform.SetParent(_hit.transform);
+                                if (_hit.rigidbody != null)
+                                    _hit.rigidbody.AddForce(-_hit.point * M4A4_FPS.Power);
 
-                                if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy"))
+                                if (_hit.transform.CompareTag("Cylinder"))
                                 {
+                                    GameObject cloneFlame = Instantiate(Flame, _hit.point, Quaternion.identity);
+                                    cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
+
                                     Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                    TakeDamage.Damage(M4A4_FPS.Damage);
+                                    TakeDamage.Damage(M4A4_FPS.Damage * 3);
                                 }
-                                else if (_hit.transform.CompareTag("Enemy"))
+                                else
                                 {
-                                    Health TakeDamage = _hit.transform.GetComponent<Health>();
-                                    TakeDamage.adjustCurrentHealth(-(int)M4A4_FPS.Damage);
+                                    GameObject clonedImpact = Instantiate(Impact, _hit.point, Quaternion.identity);
+                                    clonedImpact.transform.SetParent(_hit.transform);
+
+                                    if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy"))
+                                    {
+                                        Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
+                                        TakeDamage.Damage(M4A4_FPS.Damage);
+                                    }
                                 }
                             }
                         }
@@ -126,31 +153,34 @@ public class FireController : MonoBehaviour
 
                         if (Physics.Raycast(transform.position, transform.forward, out _hit, M4MB_FPS.MaxDistance))
                         {
-                            if (_hit.rigidbody != null)
-                                _hit.rigidbody.AddForce(-_hit.point * M4MB_FPS.Power);
-
-                            if (_hit.transform.CompareTag("Cylinder"))
+                            if (_hit.transform.CompareTag("Enemy"))
                             {
-                                GameObject cloneFlame = Instantiate(Flame, _hit.point, Quaternion.identity);
-                                cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
-
-                                Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                TakeDamage.Damage(M4MB_FPS.Damage * 3);
+                                Health TakeDamage = _hit.transform.GetComponent<Health>();
+                                TakeDamage.adjustCurrentHealth(-(int)M4MB_FPS.Damage);
                             }
                             else
                             {
-                                GameObject clonedImpact = Instantiate(Impact, _hit.point, Quaternion.identity);
-                                clonedImpact.transform.SetParent(_hit.transform);
+                                if (_hit.rigidbody != null)
+                                    _hit.rigidbody.AddForce(-_hit.point * M4MB_FPS.Power);
 
-                                if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy"))
+                                if (_hit.transform.CompareTag("Cylinder"))
                                 {
+                                    GameObject cloneFlame = Instantiate(Flame, _hit.point, Quaternion.identity);
+                                    cloneFlame.transform.SetParent(GameObject.Find("Cylinder").transform);
+
                                     Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
-                                    TakeDamage.Damage(M4MB_FPS.Damage);
+                                    TakeDamage.Damage(M4MB_FPS.Damage * 3);
                                 }
-                                else if (_hit.transform.CompareTag("Enemy"))
+                                else
                                 {
-                                    Health TakeDamage = _hit.transform.GetComponent<Health>();
-                                    TakeDamage.adjustCurrentHealth(-(int)M4MB_FPS.Damage);
+                                    GameObject clonedImpact = Instantiate(Impact, _hit.point, Quaternion.identity);
+                                    clonedImpact.transform.SetParent(_hit.transform);
+
+                                    if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy"))
+                                    {
+                                        Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
+                                        TakeDamage.Damage(M4MB_FPS.Damage);
+                                    }
                                 }
                             }
                         }
@@ -223,13 +253,13 @@ public class FireController : MonoBehaviour
 
         if (_currentWeapon == WeaponState.M4A4)
         {
-            _voiceOfReload.clip = M4A4_FPS.VoiceOfReload;
-            _voiceOfReload.Play();
+            _weaponsSounds.clip = M4A4_FPS.ReloadSound;
+            _weaponsSounds.Play();
         }
         else
         {
-            _voiceOfReload.clip = M4MB_FPS.VoiceOfReload;
-            _voiceOfReload.Play();
+            _weaponsSounds.clip = M4MB_FPS.ReloadSound;
+            _weaponsSounds.Play();
         }
 
         yield return new WaitForSeconds(2.2f);

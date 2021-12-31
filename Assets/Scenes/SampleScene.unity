@@ -6495,7 +6495,9 @@ MonoBehaviour:
   MaxDistance: 100
   FireRate: 25
   Damage: 20
-  VoiceOfReload: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  FireSound: {fileID: 8300000, guid: fda76a8294b565341b81fe03e1e2b8b5, type: 3}
+  NoAmmoSound: {fileID: 8300000, guid: add84611cc78e8c4cadca0b650c1e457, type: 3}
 --- !u!1 &263342249
 GameObject:
   m_ObjectHideFlags: 0
@@ -8322,7 +8324,9 @@ MonoBehaviour:
   MaxDistance: 50
   FireRate: 15
   Damage: 10
-  VoiceOfReload: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  FireSound: {fileID: 8300000, guid: fda76a8294b565341b81fe03e1e2b8b5, type: 3}
+  NoAmmoSound: {fileID: 8300000, guid: add84611cc78e8c4cadca0b650c1e457, type: 3}
 --- !u!23 &669900887
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9820,6 +9824,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933777942}
   m_Mesh: {fileID: -7021254391776006693, guid: 706b5dc8df9abd945a8e64d4cecb54be, type: 3}
+--- !u!1 &947141440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947141443}
+  - component: {fileID: 947141442}
+  m_Layer: 0
+  m_Name: DyingCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &947141442
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947141440}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &947141443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947141440}
+  m_LocalRotation: {x: 0.7325264, y: -0, z: -0, w: 0.6807387}
+  m_LocalPosition: {x: 2.237, y: 5.426, z: -6.508632}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 94.19699, y: 0, z: 0}
 --- !u!1 &949811880
 GameObject:
   m_ObjectHideFlags: 0
@@ -15025,6 +15103,69 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &986857486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986857487}
+  - component: {fileID: 986857489}
+  - component: {fileID: 986857488}
+  m_Layer: 0
+  m_Name: Damageable
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &986857487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986857486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6011297734682491914}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &986857488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986857486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffa418456c9f2f4999cd4fe17599ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DyingCamera: {fileID: 947141442}
+  OtherCamera:
+  - {fileID: 1659258713}
+  - {fileID: 1877086189}
+  - {fileID: 972265004}
+--- !u!136 &986857489
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986857486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.27879715
+  m_Height: 1.9637051
+  m_Direction: 1
+  m_Center: {x: 0.005632639, y: 0.48185253, z: 0}
 --- !u!1 &994915388
 GameObject:
   m_ObjectHideFlags: 0
@@ -45627,7 +45768,6 @@ MonoBehaviour:
   waypoints:
   - {fileID: 372544000}
   - {fileID: 463613589}
-  - {fileID: 0}
   _state: 0
 --- !u!108 &877113485922426386
 Light:
@@ -46286,7 +46426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &877113485932696382
 GameObject:
   m_ObjectHideFlags: 0
@@ -82720,7 +82860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1946803618347368530
 GameObject:
   m_ObjectHideFlags: 0
@@ -85333,7 +85473,9 @@ MonoBehaviour:
   MaxDistance: 100
   FireRate: 25
   Damage: 20
-  VoiceOfReload: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  FireSound: {fileID: 8300000, guid: fda76a8294b565341b81fe03e1e2b8b5, type: 3}
+  NoAmmoSound: {fileID: 8300000, guid: add84611cc78e8c4cadca0b650c1e457, type: 3}
 --- !u!23 &5628454091060110642
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -86180,7 +86322,9 @@ MonoBehaviour:
   MaxDistance: 50
   FireRate: 15
   Damage: 10
-  VoiceOfReload: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 9baf1ca12cd1b7b45b2c86d34b7fd9fe, type: 3}
+  FireSound: {fileID: 8300000, guid: fda76a8294b565341b81fe03e1e2b8b5, type: 3}
+  NoAmmoSound: {fileID: 8300000, guid: add84611cc78e8c4cadca0b650c1e457, type: 3}
 --- !u!1 &6011297734682452010
 GameObject:
   m_ObjectHideFlags: 0
@@ -86709,7 +86853,7 @@ GameObject:
   - component: {fileID: 6011297734682452465}
   m_Layer: 0
   m_Name: Soldier
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87068,6 +87212,7 @@ Transform:
   - {fileID: 6011297734682491912}
   - {fileID: 1659258711}
   - {fileID: 972265007}
+  - {fileID: 986857487}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

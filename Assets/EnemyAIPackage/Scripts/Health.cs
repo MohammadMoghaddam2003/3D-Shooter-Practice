@@ -54,6 +54,12 @@ public class Health : MonoBehaviour
         Anim.SetBool("Punch", false);
         Anim.SetFloat("AngularSpeed", 0f);
         Anim.SetFloat("Speed", 0f);
+
+        Destroy(gameObject.GetComponent<Attack>());
+        Destroy(gameObject.GetComponent<EnemyAnimation>());
+        Destroy(gameObject.GetComponent<EnemyController>());
+        Destroy(gameObject.GetComponent<Patrol>());
+        Destroy(gameObject.GetComponent<Aggro>());
     }
 
     void resurrect()
