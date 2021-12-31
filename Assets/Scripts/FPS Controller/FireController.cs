@@ -37,30 +37,27 @@ public class FireController : MonoBehaviour
     {
         ChangeWeapon();
 
-        if (Input.GetButton("Fire1") && _camera.enabled)
+        if (_currentWeapon == WeaponState.M4A4)
         {
-            if (_currentWeapon == WeaponState.M4A4 && _shootedBulletM4A4 >= MaxBulletOfM4A4)
-                _canFire = false;
-
-            else if (_currentWeapon == WeaponState.M4MB && _shootedBulletM4MB >= MaxBulletOfM4MB)
-                _canFire = false;
-
-            else
-                _canFire = true; ;
-
-
-            if (_canFire)
+            if (Input.GetButton("Fire1") && _camera.enabled && _shootedBulletM4A4 <= MaxBulletOfM4A4 && _canFire)
+                Fire();
+        }
+        else
+        {
+            if (Input.GetButtonDown("Fire1") && _camera.enabled && _shootedBulletM4MB <= MaxBulletOfM4MB && _canFire)
                 Fire();
         }
 
+        SetActiveParticalSystemOfFire();
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (_currentWeapon == WeaponState.M4A4 && MaxAmmoM4A4 >= _usedAmmoM4A4)
+            if (_currentWeapon == WeaponState.M4A4 && MaxAmmoM4A4 >= _usedAmmoM4A4 && _shootedBulletM4A4 > 0)
             {
                 StartCoroutine(Reloading());
                 StopCoroutine(Reloading());
             }
-            else if (_currentWeapon == WeaponState.M4MB && MaxAmmoM4MB >= _usedAmmoM4MB)
+            else if (_currentWeapon == WeaponState.M4MB && MaxAmmoM4MB >= _usedAmmoM4MB && _shootedBulletM4MB > 0)
             {
                 StartCoroutine(Reloading());
                 StopCoroutine(Reloading());
@@ -161,9 +158,34 @@ public class FireController : MonoBehaviour
 
                     break;
                 }
-
         }
 
+    }
+
+    void ChangeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _currentWeapon = WeaponState.M4MB;
+            M4A4_FPS.gameObject.SetActive(false);
+            M4A4_TPS.gameObject.SetActive(false);
+
+            M4MB_FPS.gameObject.SetActive(true);
+            M4MB_TPS.gameObject.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _currentWeapon = WeaponState.M4A4;
+            M4MB_FPS.gameObject.SetActive(false);
+            M4MB_TPS.gameObject.SetActive(false);
+
+            M4A4_FPS.gameObject.SetActive(true);
+            M4A4_TPS.gameObject.SetActive(true);
+        }
+    }
+
+    void SetActiveParticalSystemOfFire()
+    {
         if (Input.GetButtonDown("Fire1"))
         {
             if (_currentWeapon == WeaponState.M4MB)
@@ -194,27 +216,6 @@ public class FireController : MonoBehaviour
         }
     }
 
-    void ChangeWeapon()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            _currentWeapon = WeaponState.M4MB;
-            M4A4_FPS.gameObject.SetActive(false);
-            M4A4_TPS.gameObject.SetActive(false);
-
-            M4MB_FPS.gameObject.SetActive(true);
-            M4MB_TPS.gameObject.SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _currentWeapon = WeaponState.M4A4;
-            M4MB_FPS.gameObject.SetActive(false);
-            M4MB_TPS.gameObject.SetActive(false);
-
-            M4A4_FPS.gameObject.SetActive(true);
-            M4A4_TPS.gameObject.SetActive(true);
-        }
-    }
 
     IEnumerator Reloading()
     {
@@ -235,16 +236,12 @@ public class FireController : MonoBehaviour
 
         if (_currentWeapon == WeaponState.M4A4)
         {
-            if (_shootedBulletM4A4 > 0f)
-                _shootedBulletM4A4 = 0f;
-
+            _shootedBulletM4A4 = 0f;
             _usedAmmoM4A4++;
         }
         else
         {
-            if (_shootedBulletM4MB > 0f)
-                _shootedBulletM4MB = 0f;
-
+            _shootedBulletM4MB = 0f;
             _usedAmmoM4MB++;
         }
 
