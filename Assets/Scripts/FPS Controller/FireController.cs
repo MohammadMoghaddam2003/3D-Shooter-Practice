@@ -1,17 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
+
+[RequireComponent(typeof(AudioSource))]
 public class FireController : MonoBehaviour
 {
     public GameObject Impact, Flame, M4MBMazerFlash_TPS, M4A4MazerFlash_TPS, M4MBMazerFlash_FPS,
      M4A4MazerFlash_FPS;
     public Weapons M4A4_FPS, M4MB_FPS, M4MB_TPS, M4A4_TPS;
-    public Animator ReloadingSoldier;
+    public Animator SoldierAnim;
     public float MaxBulletOfM4A4 = 10f, MaxBulletOfM4MB = 5f, MaxAmmoM4A4 = 3f, MaxAmmoM4MB = 3;
 
     private RaycastHit _hit;
     private Camera _camera;
     private WeaponState _currentWeapon = WeaponState.M4A4;
+    private AudioSource _voiceOfReload;
     private float _nextTimeToFire;
     private static float _shootedBulletM4A4, _shootedBulletM4MB, _usedAmmoM4A4, _usedAmmoM4MB;
     private bool _canFire = true;
@@ -19,6 +22,9 @@ public class FireController : MonoBehaviour
 
     void Start()
     {
+        if (!_voiceOfReload)
+            _voiceOfReload = GetComponent<AudioSource>();
+
         _camera = GetComponent<Camera>();
         M4MBMazerFlash_TPS.SetActive(false);
         M4MBMazerFlash_FPS.SetActive(false);
@@ -74,6 +80,8 @@ public class FireController : MonoBehaviour
 
                         _shootedBulletM4A4++;
 
+                        SoldierAnim.SetTrigger("IsShooting");
+
                         if (Physics.Raycast(transform.position, transform.forward, out _hit, M4A4_FPS.MaxDistance))
                         {
                             if (_hit.rigidbody != null)
@@ -116,6 +124,8 @@ public class FireController : MonoBehaviour
                         _nextTimeToFire = Time.time + 1 / M4MB_FPS.FireRate;
 
                         _shootedBulletM4MB++;
+
+                        SoldierAnim.SetTrigger("IsShooting");
 
                         if (Physics.Raycast(transform.position, transform.forward, out _hit, M4MB_FPS.MaxDistance))
                         {
@@ -208,7 +218,18 @@ public class FireController : MonoBehaviour
 
     IEnumerator Reloading()
     {
-        ReloadingSoldier.SetTrigger("Reload");
+        SoldierAnim.SetTrigger("Reload");
+
+        if (_currentWeapon == WeaponState.M4A4)
+        {
+            _voiceOfReload.clip = M4A4_FPS.VoiceOfReload;
+            _voiceOfReload.Play();
+        }
+        else
+        {
+            _voiceOfReload.clip = M4MB_FPS.VoiceOfReload;
+            _voiceOfReload.Play();
+        }
 
         yield return new WaitForSeconds(2.2f);
 

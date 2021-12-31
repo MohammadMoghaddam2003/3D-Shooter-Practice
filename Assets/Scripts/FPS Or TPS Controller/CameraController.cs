@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera CameraFPS, CameraTPS;
+    public Camera CameraFPS, CameraTPS, GunCamera;
 
     void Update()
     {
@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
         {
             CameraTPS.enabled = !CameraTPS.enabled;
             CameraFPS.enabled = !CameraFPS.enabled;
+            GunCamera.enabled = !GunCamera.enabled;
         }
     }
 }
