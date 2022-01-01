@@ -6,7 +6,7 @@ using UnityEngine;
 public class FireController : MonoBehaviour
 {
     public GameObject Impact, Flame, M4MBMazerFlash_TPS, M4A4MazerFlash_TPS, M4MBMazerFlash_FPS,
-     M4A4MazerFlash_FPS;
+     M4A4MazerFlash_FPS, Blood;
     public Weapons M4A4_FPS, M4MB_FPS, M4MB_TPS, M4A4_TPS;
     public Animator SoldierAnim;
     public float MaxBulletOfM4A4 = 10f, MaxBulletOfM4MB = 5f, MaxAmmoM4A4 = 3f, MaxAmmoM4MB = 3;
@@ -107,6 +107,8 @@ public class FireController : MonoBehaviour
                         {
                             if (_hit.transform.CompareTag("Enemy"))
                             {
+                                Instantiate(Blood, _hit.point, Quaternion.identity);
+
                                 Health TakeDamage = _hit.transform.GetComponent<Health>();
                                 TakeDamage.adjustCurrentHealth(-(int)M4A4_FPS.Damage);
                             }
@@ -128,7 +130,7 @@ public class FireController : MonoBehaviour
                                     GameObject clonedImpact = Instantiate(Impact, _hit.point, Quaternion.identity);
                                     clonedImpact.transform.SetParent(_hit.transform);
 
-                                    if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy"))
+                                    if (!_hit.transform.CompareTag("Ground") && !_hit.transform.CompareTag("Enemy") && !_hit.transform.CompareTag("Wall"))
                                     {
                                         Damageable TakeDamage = _hit.transform.GetComponent<Damageable>();
                                         TakeDamage.Damage(M4A4_FPS.Damage);
@@ -155,6 +157,8 @@ public class FireController : MonoBehaviour
                         {
                             if (_hit.transform.CompareTag("Enemy"))
                             {
+                                Instantiate(Blood, -_hit.transform.position, Quaternion.identity);
+
                                 Health TakeDamage = _hit.transform.GetComponent<Health>();
                                 TakeDamage.adjustCurrentHealth(-(int)M4MB_FPS.Damage);
                             }
@@ -222,6 +226,8 @@ public class FireController : MonoBehaviour
             {
                 M4MBMazerFlash_TPS.SetActive(true);
                 M4MBMazerFlash_FPS.SetActive(true);
+
+                Invoke("SetFalseParticalSystemOfFire", 1 * Time.deltaTime);
             }
 
             else
@@ -233,16 +239,22 @@ public class FireController : MonoBehaviour
 
         if (Input.GetButtonUp("Fire1"))
         {
-            if (_currentWeapon == WeaponState.M4MB)
-            {
-                M4MBMazerFlash_TPS.SetActive(false);
-                M4MBMazerFlash_FPS.SetActive(false);
-            }
-            else
-            {
-                M4A4MazerFlash_TPS.SetActive(false);
-                M4A4MazerFlash_FPS.SetActive(false);
-            }
+            SetFalseParticalSystemOfFire();
+        }
+    }
+
+
+    void SetFalseParticalSystemOfFire()
+    {
+        if (_currentWeapon == WeaponState.M4MB)
+        {
+            M4MBMazerFlash_TPS.SetActive(false);
+            M4MBMazerFlash_FPS.SetActive(false);
+        }
+        else
+        {
+            M4A4MazerFlash_TPS.SetActive(false);
+            M4A4MazerFlash_FPS.SetActive(false);
         }
     }
 

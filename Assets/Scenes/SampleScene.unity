@@ -10127,6 +10127,7 @@ MonoBehaviour:
   M4A4MazerFlash_TPS: {fileID: 935428752030981082}
   M4MBMazerFlash_FPS: {fileID: 1211391316}
   M4A4MazerFlash_FPS: {fileID: 184601769}
+  Blood: {fileID: 1362321489287054, guid: 17bd62b7ccd885f41a16399ebc879026, type: 3}
   M4A4_FPS: {fileID: 253491537}
   M4MB_FPS: {fileID: 669900886}
   M4MB_TPS: {fileID: 6011297734682452009}
@@ -15181,7 +15182,7 @@ GameObject:
   - component: {fileID: 994915393}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23037,6 +23038,7 @@ MonoBehaviour:
   M4A4MazerFlash_TPS: {fileID: 935428752030981082}
   M4MBMazerFlash_FPS: {fileID: 1211391316}
   M4A4MazerFlash_FPS: {fileID: 184601769}
+  Blood: {fileID: 1362321489287054, guid: 17bd62b7ccd885f41a16399ebc879026, type: 3}
   M4A4_FPS: {fileID: 253491537}
   M4MB_FPS: {fileID: 669900886}
   M4MB_TPS: {fileID: 6011297734682452009}

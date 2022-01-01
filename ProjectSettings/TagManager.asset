@@ -8,6 +8,7 @@ TagManager:
   - Cylinder
   - Enemy
   - GameManager
+  - Wall
   layers:
   - Default
   - TransparentFX
