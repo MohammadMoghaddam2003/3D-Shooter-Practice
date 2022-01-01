@@ -17,8 +17,8 @@ public class Health : MonoBehaviour
         set { _state = value; }
     }
 
-    public int maxHealth = 5;                               // max health
-    public int curHealth = 5;                               // current health
+    public int maxHealth = 100;                               // max health
+    public int curHealth = 100;                               // current health
     public bool canRegenerate = true;                       // enable HP regeneration
     public float regenerationCoolDown = 15;
 
@@ -60,6 +60,8 @@ public class Health : MonoBehaviour
         Destroy(gameObject.GetComponent<EnemyController>());
         Destroy(gameObject.GetComponent<Patrol>());
         Destroy(gameObject.GetComponent<Aggro>());
+
+        gameObject.tag = "Dead";
     }
 
     void resurrect()

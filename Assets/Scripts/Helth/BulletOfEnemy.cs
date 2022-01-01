@@ -6,9 +6,12 @@ public class BulletOfEnemy : MonoBehaviour
 
     void OnTriggerEnter(Collider player)
     {
-        PlayerHelth takeDamage = player.GetComponent<PlayerHelth>();
-        takeDamage.TakeDamage(5);
+        if (player.CompareTag("Player"))
+        {
+            PlayerHelth takeDamage = player.GetComponent<PlayerHelth>();
+            takeDamage.TakeDamage(50);
 
-        Instantiate(Blood, transform.position, Quaternion.identity);
+            Instantiate(Blood, transform.position, Quaternion.identity);
+        }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - GameManager
   - Wall
+  - Dead
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Body
-  - 
-  - 
+  - Crosshair
+  - HelthText
   - 
   - 
   - 

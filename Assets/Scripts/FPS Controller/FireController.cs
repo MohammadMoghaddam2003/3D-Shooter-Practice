@@ -1,12 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-
 [RequireComponent(typeof(AudioSource))]
 public class FireController : MonoBehaviour
 {
     public GameObject Impact, Flame, M4MBMazerFlash_TPS, M4A4MazerFlash_TPS, M4MBMazerFlash_FPS,
-     M4A4MazerFlash_FPS, Blood;
+     M4A4MazerFlash_FPS, Blood, TargetForEnemy;
     public Weapons M4A4_FPS, M4MB_FPS, M4MB_TPS, M4A4_TPS;
     public Animator SoldierAnim;
     public float MaxBulletOfM4A4 = 10f, MaxBulletOfM4MB = 5f, MaxAmmoM4A4 = 3f, MaxAmmoM4MB = 3;
@@ -36,7 +35,6 @@ public class FireController : MonoBehaviour
     void Update()
     {
         ChangeWeapon();
-
         if (_currentWeapon == WeaponState.M4A4)
         {
             if (Input.GetButton("Fire1") && _camera.enabled)
@@ -87,6 +85,7 @@ public class FireController : MonoBehaviour
                 StopCoroutine(Reloading());
             }
         }
+
     }
 
     void Fire()
@@ -111,6 +110,11 @@ public class FireController : MonoBehaviour
 
                                 Health TakeDamage = _hit.transform.GetComponent<Health>();
                                 TakeDamage.adjustCurrentHealth(-(int)M4A4_FPS.Damage);
+
+                                Aggro enemyAggro = _hit.transform.GetComponent<Aggro>();
+                                enemyAggro.state = Aggro.engagementArea.CONE;
+
+                                enemyAggro.target = TargetForEnemy;
                             }
                             else
                             {
@@ -161,6 +165,11 @@ public class FireController : MonoBehaviour
 
                                 Health TakeDamage = _hit.transform.GetComponent<Health>();
                                 TakeDamage.adjustCurrentHealth(-(int)M4MB_FPS.Damage);
+
+                                Aggro enemyAggro = _hit.transform.GetComponent<Aggro>();
+                                enemyAggro.state = Aggro.engagementArea.CONE;
+
+                                enemyAggro.target = TargetForEnemy;
                             }
                             else
                             {
