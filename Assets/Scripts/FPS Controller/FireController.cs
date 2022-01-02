@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireController : MonoBehaviour
 {
     public GameObject Impact, Flame, M4MBMazerFlash_TPS, M4A4MazerFlash_TPS, M4MBMazerFlash_FPS,
-     M4A4MazerFlash_FPS, Blood, TargetForEnemy;
+     M4A4MazerFlash_FPS, Blood, TargetForEnemy, GrenadePrefab;
     public Weapons M4A4_FPS, M4MB_FPS, M4MB_TPS, M4A4_TPS;
     public Animator SoldierAnim;
     public float MaxBulletOfM4A4 = 10f, MaxBulletOfM4MB = 5f, MaxAmmoM4A4 = 3f, MaxAmmoM4MB = 3;
@@ -84,6 +84,11 @@ public class FireController : MonoBehaviour
                 StartCoroutine(Reloading());
                 StopCoroutine(Reloading());
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && _camera.enabled)
+        {
+            ShootGrenade();
         }
 
     }
@@ -265,6 +270,13 @@ public class FireController : MonoBehaviour
             M4A4MazerFlash_TPS.SetActive(false);
             M4A4MazerFlash_FPS.SetActive(false);
         }
+    }
+
+
+    void ShootGrenade()
+    {
+        GameObject grenade = Instantiate(GrenadePrefab, transform.position, transform.rotation);
+        grenade.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.VelocityChange);
     }
 
 

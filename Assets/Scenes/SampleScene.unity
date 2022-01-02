@@ -7397,7 +7397,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463613588}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 42.53, y: 2.23, z: 83.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10284,6 +10284,7 @@ MonoBehaviour:
   M4A4MazerFlash_FPS: {fileID: 184601769}
   Blood: {fileID: 1362321489287054, guid: 17bd62b7ccd885f41a16399ebc879026, type: 3}
   TargetForEnemy: {fileID: 986857486}
+  GrenadePrefab: {fileID: 1654574614232626983, guid: 820500f20f938a143b5197093718bcf0, type: 3}
   M4A4_FPS: {fileID: 253491537}
   M4MB_FPS: {fileID: 669900886}
   M4MB_TPS: {fileID: 6011297734682452009}
@@ -23279,6 +23280,7 @@ MonoBehaviour:
   M4A4MazerFlash_FPS: {fileID: 184601769}
   Blood: {fileID: 1362321489287054, guid: 17bd62b7ccd885f41a16399ebc879026, type: 3}
   TargetForEnemy: {fileID: 986857486}
+  GrenadePrefab: {fileID: 1654574614232626983, guid: 820500f20f938a143b5197093718bcf0, type: 3}
   M4A4_FPS: {fileID: 253491537}
   M4MB_FPS: {fileID: 669900886}
   M4MB_TPS: {fileID: 6011297734682452009}
@@ -29542,8 +29544,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877086186}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.114, y: 0.027, z: -0.007}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.11399996, y: 0.02699995, z: -0.0070001716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9203307870137712004}

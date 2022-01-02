@@ -15,11 +15,11 @@ E:/MOHAMMAD/Project/Git Hub/First-Character-Controller
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-1290
+1594
 Successfully changed project path to: E:/MOHAMMAD/Project/Git Hub/First-Character-Controller
 E:/MOHAMMAD/Project/Git Hub/First-Character-Controller
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 4763.78 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 3740.09 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.7f1 (c53830e277f1)
 [Subsystems] Discovering subsystems at path D:/Program Files/Unity/Editor/Data/Resources/UnitySubsystems
@@ -30,10 +30,15 @@ Direct3D:
     Renderer: Microsoft Basic Render Driver (ID=0x8c)
     Vendor:   
     VRAM:     2031 MB
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
 Initialize mono
 Mono path[0] = 'D:/Program Files/Unity/Editor/Data/Managed'
 Mono path[1] = 'D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56128
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56504
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Program Files/Unity/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002654 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 250.21 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
